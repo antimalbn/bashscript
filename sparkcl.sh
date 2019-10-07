@@ -38,7 +38,18 @@ aws ec2 authorize-security-group-ingress \
     --protocol tcp \
     --port 0-63000 \
     --cidr $vpccidr
-
+    
+aws ec2 authorize-security-group-ingress \
+    --group-id $sgid \
+    --protocol tcp \
+    --port 8080 \
+    --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress \
+    --group-id $sgid \
+    --protocol tcp \
+    --port 9999 \
+    --cidr 0.0.0.0/0    
+    
 
 read -p "Enter Cluster Name  " clname
 read -p "Enter Number of slave to launch " slvnum
