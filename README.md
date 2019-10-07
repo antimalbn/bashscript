@@ -7,11 +7,14 @@ Launch a new linux instances in aws with Amazon Linux 2 AMI and attach IAM role 
       
 Login to newly launched server and run below command.
 
-             aws configure 
+            aws configure 
 
             Press enter for access key and secrete(keep the blank).
             In default region select us-east-1 and enter 
             For output enter  
+Verfy AWS CLI is working by running below commands 
+
+            aws ec2 describe-vpcs    
   
 Install git 
  
@@ -25,7 +28,7 @@ Download script using git
 
 Run below command
 
-mv bashscript/sparkcl.sh . 
+             mv bashscript/sparkcl.sh . 
 
                       
 Run the script 
