@@ -6,14 +6,15 @@
 #Function to setup script firsttime
 setupfirsttime(){
 	echo "Setting up script,it will take few minutes"
-	yum update -y
-        yum install -y python3-pip
+        sudo yum update -y
+        sudo yum install -y python3-pip
 
         ppv=`which pip3`
 
 if [ ! -z "$ppv" ] ;
    then
       pip3 install --user flintrock 
+      pip3 install --user "cryptography==2.4.2" 
 
 else
      echo "Unbale to install pip3"
@@ -62,8 +63,8 @@ flintrock launch $clname \
     --ec2-security-group $sgname
 
 
-flintrock run-command $clname "/bin/bash /home/ec2-user/copys3lib.sh"
-flintrock run-command --master-only $clname "/bin/bash /home/ec2-user/script_master.sh"
+flintrock run-command --ec2-identity-file $keypath --ec2-user ec2-user $clname "/bin/bash /home/ec2-user/copys3lib.sh"
+flintrock run-command --master-only --ec2-identity-file $keypath --ec2-user ec2-user $clname "/bin/bash /home/ec2-user/script_master.sh"
 exit 
 
 }
@@ -83,9 +84,10 @@ addslave(){
 
 read -p "Enter Cluster Name  " clname
 read -p "Enter Number of slave to add  " slvnum
+read -p "Enter EC2 key file path " keypath
 
-flintrock add-slaves $clname --num-slaves=$slvnum
-flintrock run-command $clname "/bin/bash /home/ec2-user/copys3lib.sh"
+flintrock add-slaves --ec2-identity-file $keypath --ec2-user ec2-user $clname --num-slaves=$slvnum
+flintrock run-command --ec2-identity-file $keypath --ec2-user ec2-user $clname "/bin/bash /home/ec2-user/copys3lib.sh"
 exit
 
 }
@@ -95,8 +97,9 @@ removeslave(){
 
 read -p "Enter Cluster Name  " clname
 read -p "Enter Number of slave to remove  " slvnum
+read -p "Enter EC2 key path like /spark/mysrv.pem  " keypath
 
-flintrock remove-slaves $clname --num-slaves=$slvnum
+flintrock remove-slaves --ec2-identity-file $keypath --ec2-user ec2-user $clname --num-slaves=$slvnum
 
 exit
 
@@ -106,8 +109,9 @@ exit
 startcl(){
 
 read -p "Enter Cluster Name  " clname
+read -p "Enter EC2 key path like /spark/mysrv.pem  " keypath
 	
-flintrock start $clname
+flintrock start --ec2-identity-file $keypath --ec2-user ec2-user  $clname
 
 exit
 
@@ -148,7 +152,6 @@ manageclmenu() {
 
 
 show_menuscl(){
-        clear
         echo "~~~~~~~~~~~~~~~~~~~~~"    
         echo " Spark Cluster"
         echo "~~~~~~~~~~~~~~~~~~~~~"
@@ -171,7 +174,6 @@ done
 
 show_menusexclmg(){
 
-        clear
         echo "~~~~~~~~~~~~~~~~~~~~~"    
         echo " Existing Cluster Mangement Options"
         echo "~~~~~~~~~~~~~~~~~~~~~"
@@ -193,7 +195,6 @@ show_menusexclmg(){
 
 # do something
 show_menus(){
-	clear
 	echo "~~~~~~~~~~~~~~~~~~~~~"	
 	echo " M A I N - M E N U"
 	echo "~~~~~~~~~~~~~~~~~~~~~"
