@@ -34,3 +34,5 @@ Run below command
 Run the script 
 
             /bin/bash sparkcl.sh
+
+To launch new cluster use AMI ami-0097a939753b36096 . 
