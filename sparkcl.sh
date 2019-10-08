@@ -74,8 +74,9 @@ flintrock launch $clname \
     --ec2-security-group $sgname
 
 
-flintrock run-command --ec2-identity-file $keypath --ec2-user ec2-user $clname "/bin/bash /home/ec2-user/copys3lib.sh"
-flintrock run-command --master-only --ec2-identity-file $keypath --ec2-user ec2-user $clname "/bin/bash /home/ec2-user/script_master.sh"
+#flintrock run-command --ec2-identity-file $keypath --ec2-user ec2-user $clname "/bin/bash /home/ec2-user/copys3lib.sh"
+flintrock copy-file --master-only --ec2-identity-file $keypath --ec2-user ec2-user $clname notebook.sh /home/ec2-user/
+flintrock run-command --master-only --ec2-identity-file $keypath --ec2-user ec2-user $clname "/bin/bash notebook.sh"
 exit 
 
 }
