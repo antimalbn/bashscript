@@ -21,7 +21,7 @@ Verfy AWS CLI is working by running below commands
   
 Install git 
  
-            yum install -y git 
+            sudo yum install -y git 
 
 Copy ssh key to server in /home/ec2-user directory 
      
