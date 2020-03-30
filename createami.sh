@@ -9,7 +9,7 @@ conda info
 conda install -y boto3
 conda install -y py4j
 conda install -y boto3
-
+# test line
 
 wget  https://amiscriptv4.s3.amazonaws.com/aws-java-sdk-1.7.4.jar 
 wget  https://amiscriptv4.s3.amazonaws.com/hadoop-aws-2.7.2.jar 
